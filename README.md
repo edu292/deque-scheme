@@ -94,7 +94,7 @@ A interface pública da biblioteca é simples e intuitiva.
 
 ```scheme
 ;; Carregue o arquivo da biblioteca
-(load "deque.rkt")
+(load "deque.scm")
 
 ;; 1. Crie um novo deque
 (define meu-deque (make-deque))
