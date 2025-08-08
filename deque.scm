@@ -6,16 +6,16 @@
 (define (node-value node)
   (car node))
 
-(define (predecessor-node node)
+(define (right-node node)
   (cddr node))
 
-(define (succsessor-node node)
+(define (left-node node)
   (cadr node))
 
-(define (set-node-predecessor! node prev)
+(define (set-node-right! node prev)
   (set-cdr! (cdr node) prev))
 
-(define (set-node-succsessor! node next)
+(define (set-node-left! node next)
   (set-car! (cdr node) next))
 
 (define empty-node (make-node '()))
@@ -57,8 +57,8 @@
     (cond ((empty? deque)
            (set-bounds! deque new-node))
           (else
-           (set-node-succsessor! (front-node deque) new-node)
-           (set-node-predecessor! new-node (front-node deque))
+           (set-node-left! (front-node deque) new-node)
+           (set-node-right! new-node (front-node deque))
            (set-front-node! deque new-node)))))
 
 (define (rear-insert! deque value)
@@ -66,23 +66,23 @@
     (cond ((empty? deque)
            (set-bounds! deque new-node))
           (else
-           (set-node-predecessor! (rear-node deque) new-node)
-           (set-node-succsessor! new-node (rear-node deque))
+           (set-node-right! (rear-node deque) new-node)
+           (set-node-left! new-node (rear-node deque))
            (set-rear-node! deque new-node)))))
 
 (define (front-delete! deque)
   (cond ((empty? deque) (display "Can't delete from an empty deque"))
-        ((null? (predecessor-node (front-node deque)))
+        ((null? (right-node (front-node deque)))
          (set-bounds! deque empty-node))
         (else
-         (set-front-node! deque (predecessor-node (front-node deque)))
-         (set-node-succsessor! (front-node deque) '()))))
+         (set-front-node! deque (right-node (front-node deque)))
+         (set-node-left! (front-node deque) '()))))
 
 (define (rear-delete! deque)
   (cond ((empty? deque) (display "Can't delete from an empty deque"))
-        ((null? (succsessor-node (rear-node deque)))
+        ((null? (left-node (rear-node deque)))
          (set-bounds! deque empty-node))
         (else
-         (set-rear-node! deque (succsessor-node (rear-node deque)))
-         (set-node-predecessor! (rear-node deque) '()))))
+         (set-rear-node! deque (left-node (rear-node deque)))
+         (set-node-right! (rear-node deque) '()))))
          
